@@ -1,12 +1,15 @@
 
+% NOTE: run once after every Matlab startup
+Fern.load('Aster_FRA');
 
+
+%%
 clc
-
 
 LCR_dev_class_name = "LCR_8230_dev";
 
-
-Time_profile = "fine"; % "ultra_fast", "common", "fine", "most_accurate"
+% NOTE: try different options
+Time_profile = "common"; % "ultra_fast", "common", "fine", "most_accurate"
 
 Gen_Voltage_level = 1; % [V]
 F_min = 10; % [Hz]
@@ -29,16 +32,7 @@ Settings.noise_env_flag = false; % NOTE: do not use
 Fig_FRA = init_FRA_figure();
 Result = Measure_LCR(LCR_dev_class_name, Settings);
 
-
-
-
-
-
-
-
-
-
-
+save_result_file(Result);
 
 
 

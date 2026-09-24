@@ -50,7 +50,7 @@ Settings.harm_num = Harm_num;
 Settings.time_profile = Time_profile;
 Settings.noise_env_flag = Noisy_env;
 
-Fig_FRA = init_FRA_figure();
+
 
 
 %%
@@ -60,10 +60,12 @@ Result = Measure_LCR(LCR_dev_class_name, Settings);
 
 %%
 
+Fig_FRA = init_FRA_figure();
+
 Result1 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
 % Result2 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
 
-
+save_result_file(Result1);
 
 
 

@@ -1,5 +1,4 @@
 
-% FIXME: (1) add plot
 
 function Result = Measure_LCR(LCR_dev_class_name, Settings, Fig_FRA)
 arguments
@@ -33,8 +32,8 @@ F_range_LCR = Freq_arr >= LCR_lowest_freq;
 Freq_arr_LCR = Freq_arr(F_range_LCR);
 
 
-if ~isempty(Freq_arr_LCR)
-    Result = Aster_FRA.LCR_result_type;
+if isempty(Freq_arr_LCR)
+    Result = Aster_FRA.LCR_result_type.empty;
     return;
 end
 
@@ -42,13 +41,10 @@ end
 LCR_avilable = Aster_FRA_helper.check_LCR_avilable(LCR_type);
 if ~LCR_avilable
     warning('LCR dev unavailable'); % FIXME: disp
-    Result = ster_FRA.LCR_result_type.empty;
+    Result = Aster_FRA.LCR_result_type.empty;
     return;
 end
 
-
-% FIXME: (0) no Aster here
-Aster_FRA.switch_to_LCR(Aster_addr);
 
 % FIXME: (0) init LCR here and do loop whitout reconnect
 

@@ -30,6 +30,6 @@ cla(Ax2)
 
 Ax_arr = [Ax1, Ax2];
 
-Fig_FRA.UserData = struct('Ax_arr', Ax_arr);
+Fig_FRA.UserData = struct('ax_arr', Ax_arr);
 
 end
