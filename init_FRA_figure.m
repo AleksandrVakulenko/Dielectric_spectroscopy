@@ -8,7 +8,7 @@ Fig_name = "Data plot";
 
 Fig_FRA = figure('Position', Figure_pos, ...
              'Name', Fig_name, 'NumberTitle', 'off', ...
-             'MenuBar', 'figure', 'Resize', 'off');
+             'MenuBar', 'figure', 'Resize', 'on');
 
 Ax1 = axes('Parent', Fig_FRA, 'Position', [0.105 0.57 0.83 0.38]);
 hold(Ax1, "on"); % FIXME: (1) myabe not

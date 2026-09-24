@@ -4,6 +4,13 @@
 % FIXME: (0) add source of result to LCR_result class
 % FIXME: (0) use this source for plot line_spec
 
+% TODO:
+% 1) add master figure
+% 2) give this figure slots to Aster_FRA_gui
+% 3) init Aster frames on start and does not create them on second start
+% 4) add a slots to every device used in experiment
+
+
 function Result = Measure_Aster(LCR_dev_class_name, Aster_addr, ...
     Settings, Fig_FRA)
 arguments
@@ -149,6 +156,7 @@ disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']);
 
 disp('Finish')
 
+close(Fig);
 % --------------------------------------------------------------
 
 Result = [Result_arr_LCR Result_arr_Aster];

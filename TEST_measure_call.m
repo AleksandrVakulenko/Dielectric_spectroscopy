@@ -24,7 +24,7 @@ Noisy_env = false; % NOTE: set if noise level is high
 
 Gen_Voltage_level = 1; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-F_min = 0.5;
+F_min = 2.5;
 F_max = 200;
 F_num = 5;
 
@@ -63,10 +63,10 @@ Result = Measure_LCR(LCR_dev_class_name, Settings);
 Fig_FRA = init_FRA_figure();
 
 Result1 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
-% Result2 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
+Result2 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
 
 save_result_file(Result1);
-
+save_result_file(Result2);
 
 
 

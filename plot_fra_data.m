@@ -31,7 +31,8 @@ Cap_arr = 1./(2*pi*Res_arr.*Freq_arr);
 Cap_arr_err = -1./(2*pi*Res_arr.^2.*Freq_arr).*Res_err_arr;
 
 
-
+cla(Ax1);
+cla(Ax2);
 
 errorbar(Freq_arr, Cap_arr*1e12, Cap_arr_err*1e12, ...
     Line_spec, 'Parent', Ax1);
