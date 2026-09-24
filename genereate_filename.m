@@ -1,8 +1,10 @@
 
 
 
-function File_name = genereate_filename()
-
+function File_name = genereate_filename(add)
+arguments
+    add string = "";
+end
 DT = datetime;
 
 Year = year(DT);
@@ -20,6 +22,6 @@ Date_str = [num2str(Year, '%04d') '_' ...
             num2str(Minute, '%02d') '_' ...
             num2str(Second, '%02d')];
 
-File_name = [Date_str '.mat'];
+File_name = char([Date_str char(add) '.mat']);
 
 end
