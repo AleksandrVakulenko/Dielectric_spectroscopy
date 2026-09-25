@@ -19,14 +19,14 @@ end
 
 
 Harm_num = [3]; % NOTE: set max harm number you want to find
-Time_profile = "fine"; % "ultra_fast", "common", "fine", "most_accurate"
+Time_profile = "ultra_fast"; % "ultra_fast", "common", "fine", "most_accurate"
 Noisy_env = false; % NOTE: set if noise level is high
 
 Gen_Voltage_level = 1; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-F_min = 2.5;
+F_min = 0.01;
 F_max = 200;
-F_num = 5;
+F_num = 60;
 
 % F_min = 0.02;
 % F_max = 0.02;
@@ -51,7 +51,7 @@ Settings.time_profile = Time_profile;
 Settings.noise_env_flag = Noisy_env;
 
 
-
+Always_save_extra_data = true;
 
 %%
 
@@ -60,20 +60,28 @@ Result = Measure_LCR(LCR_dev_class_name, Settings);
 
 %%
 
+% FIMXE: (0) add flag to save all Extra_data
+% FIXME: (0) add Extra data to save function
+full_timer = tic;
 Fig_FRA = init_FRA_figure();
 
-Result1 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
-Result2 = Measure_Aster(LCR_dev_class_name, Aster_addr, Settings, Fig_FRA);
+[Result1, Extra_data_1] = Measure_Aster(LCR_dev_class_name, ...
+    Aster_addr, Settings, Fig_FRA, Always_save_extra_data);
+% [Result2, Extra_data_2] = Measure_Aster(LCR_dev_class_name, Aster_addr, ...
+%     Settings, Fig_FRA);
 
 save_result_file(Result1);
-save_result_file(Result2);
+save("Extra_data.mat", "Extra_data_1"); % FIXME
+% save_result_file(Result2);
+Full_time = toc(full_timer);, Always_save_extra_data
+disp([newline num2str(Full_time/60, '%.1f') ' min']);
+disp('Time prediction: 202.9 min')
 
+%%
 
-
-
-
-
-
+s = whos("Extra_data_1");
+Size = s.bytes/1024/1024;
+disp(['Size = ' num2str(Size, '%0.2f'), ' Mb'])
 
 
 

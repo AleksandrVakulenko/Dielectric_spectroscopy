@@ -11,13 +11,14 @@
 % 4) add a slots to every device used in experiment
 
 
-function Result = Measure_Aster(LCR_dev_class_name, Aster_addr, ...
-    Settings, Fig_FRA)
+function [Result, Extra_data] = Measure_Aster(LCR_dev_class_name, ...
+    Aster_addr, Settings, Fig_FRA, Always_save_extra_data)
 arguments
     LCR_dev_class_name
     Aster_addr
     Settings
     Fig_FRA = []
+    Always_save_extra_data = false
 end
 
 if isempty(LCR_dev_class_name) || LCR_dev_class_name == ""
@@ -66,7 +67,7 @@ end
 % NOTE: run LCR first if possible
 Result_arr_LCR = Aster_FRA.LCR_result_type.empty;
 if LCR_avilable
-    Aster_FRA.switch_to_LCR(Aster_addr);
+    Aster_FRA.switch_to_LCR(Aster_addr); % FIXME: uses Aster connection
    
     N = numel(Freq_arr_LCR);
     for i = 1:N
@@ -97,6 +98,18 @@ Resources.underrange_ind = Fig.UserData.underrange_ind;
 Resources.range_ind = Fig.UserData.range_ind;
 % FIXME: (1) place Ax_arr to Resourses
 
+% NOTE: init Aster and Gen(also Aster)
+[Aster, Gen] = Aster_FRA.connect_to_devices(Aster_addr);
+Dev_handles.aster = Aster;
+Dev_handles.gen = Gen;
+Aster.set_connection_mode("I2V");
+Aster.ADC_1_direction("internal"); % "internal", "external"
+Aster.ADC_2_direction("internal"); % "internal", "external"
+Aster.initiate(); % FIXME: (1) updates current direction to internal I2V
+% ------------------------------------
+
+ERR = [];
+try
 
 % NOTE: do not do pre measurments if LCR results avilable in freq range
 %   in range from 20 Hz to 200 Hz
@@ -104,13 +117,11 @@ flag = Aster_FRA_helper.is_LCR_results_valid_as_pre(Result_arr_LCR);
 if ~flag
     disp(['RUN PRE MEASURMENTS' newline]) % FIXME: disp
     Results_arr_PRE = Aster_FRA.pre_measurment(Resources, Aster_addr, ...
-        Gen_Voltage_level, Ax_arr);
+        Gen_Voltage_level, Ax_arr, Dev_handles);
     disp(['PRE MEASURMENTS FINISH' newline]) % FIXME: disp
 else
     Results_arr_PRE = Result_arr_LCR;
 end
-
-
 
 Time_prediction_m = Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
 disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']); % FIXME: disp
@@ -131,15 +142,29 @@ for i = 1:N
     Fixed_range = [];
     [Fit_Result, Extra_data] = Aster_FRA.single_freq_measurment(Resources, Aster_addr, ...
         Gen_freq, Gen_Voltage_level, DC_bias, Harm_num, Z_est, Time_profile, ...
-        Ax_arr, Fixed_range, false, Noisy_env);
+        Ax_arr, Fixed_range, false, Noisy_env, Dev_handles);
     if ~isempty(Fit_Result) && Aster_FRA.FRA_results_check_valid(Fit_Result)
         Fit_Result.freq = Gen_freq;
         Result_arr_Aster = [Result_arr_Aster Fit_Result];
-        Extra_data_arr = [Extra_data_arr Extra_data];
+        if add_extra(Fit_Result) || Always_save_extra_data
+            Extra_data_arr = [Extra_data_arr Extra_data];
+        else
+            Extra_data = Aster_FRA.LCR_extra_data_type; % NOTE: default is NaN
+            Extra_data_arr = [Extra_data_arr Extra_data];
+        end
         plot_fra_data(Fig_FRA, Result_arr_Aster);
     end
 
     % FIXME: it is bad in shuffled freq array
+end
+
+catch ERR
+    Aster_FRA.disconnect_devices(Aster, Gen);
+    rethrow(ERR);
+end
+
+if isempty(ERR)
+    Aster_FRA.disconnect_devices(Aster, Gen);
 end
 
 % FIXME: debug section
@@ -156,11 +181,31 @@ disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']);
 
 disp('Finish')
 
-close(Fig);
+if ~isempty(Fig) && isvalid(Fig)
+    close(Fig);
+end
 % --------------------------------------------------------------
 
 Result = [Result_arr_LCR Result_arr_Aster];
-% FIXME: (0) return Extra_data_arr
+Extra_data = Extra_data_arr;
 
 end
+
+
+
+
+% FIXME: (1) undone
+function flag = add_extra(Fit_Result)
+
+cond1 = Fit_Result.quality < 50;
+
+flag = cond1; 
+
+
+end
+
+
+
+
+
 
