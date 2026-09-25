@@ -6,6 +6,7 @@ Fern.load('Aster_FRA');
 %%
 clc
 
+LCR_dev_GPIB_num = 7;
 LCR_dev_class_name = "LCR_8230_dev";
 
 % NOTE: try different options
@@ -30,7 +31,7 @@ Settings.noise_env_flag = false; % NOTE: do not use
 
 
 Fig_FRA = init_FRA_figure();
-Result = Measure_LCR(LCR_dev_class_name, Settings);
+Result = Measure_LCR(LCR_dev_class_name, Settings, LCR_dev_GPIB_num);
 
 save_result_file(Result);
 

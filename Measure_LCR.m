@@ -1,16 +1,19 @@
 
 
-function Result = Measure_LCR(LCR_dev_class_name, Settings, Fig_FRA)
+function Result = Measure_LCR(LCR_dev_class_name, Settings, ...
+    LCR_dev_GPIB_num, Fig_FRA)
 arguments
     LCR_dev_class_name string
     Settings % FIXME: (0) type
+    LCR_dev_GPIB_num
     Fig_FRA = []
 end
 
 if isempty(LCR_dev_class_name) || LCR_dev_class_name == ""
     LCR_type = Aster_FRA_helper.LCR_device_name_type.empty;
 elseif LCR_dev_class_name == "LCR_8230_dev"
-    LCR_type = Aster_FRA_helper.LCR_device_name_type(LCR_dev_class_name, []);
+    LCR_type = Aster_FRA_helper.LCR_device_name_type(LCR_dev_class_name, ...
+        LCR_dev_GPIB_num);
 else
     error('LCR_dev_class_name: wrong value.');
 end
