@@ -31,7 +31,7 @@ Settings.noise_env_flag = false; % NOTE: do not use
 
 
 Fig_FRA = init_FRA_figure();
-Result = Measure_LCR(LCR_dev_class_name, Settings, LCR_dev_GPIB_num);
+Result = Measure_LCR(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_FRA);
 
 save_result_file(Result);
 
