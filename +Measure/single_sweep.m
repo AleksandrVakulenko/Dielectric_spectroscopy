@@ -1,17 +1,13 @@
 
-% FIXME: (0) rename to single_sweep()
-% FIXME: (0) use single array for all measurments
-% FIXME: (0) add source of result to LCR_result class
-% FIXME: (0) use this source for plot line_spec
 
 % TODO:
 % 1) add master figure
 % 2) give this figure slots to Aster_FRA_gui
 % 3) init Aster frames on start and does not create them on second start
 % 4) add a slots to every device used in experiment
+% 5) replace disp by klog
 
-
-function [Result, Extra_data] = Measure_Aster(LCR_dev_class_name, ...
+function [Result, Extra_data] = single_sweep(LCR_dev_class_name, ...
     Aster_addr, Settings, Fig_FRA, Always_save_extra_data)
 arguments
     LCR_dev_class_name
@@ -71,13 +67,13 @@ if LCR_avilable
    
     N = numel(Freq_arr_LCR);
     for i = 1:N
-        disp([newline 'LCR freq list: ' num2str(i) '/' num2str(N)]); % FIXME: disp
+        disp([newline 'LCR freq list: ' num2str(i) '/' num2str(N)]);
 
         Gen_freq = Freq_arr_LCR(i);
         LCR_Result = Aster_FRA.LCR_measure(LCR_type, Gen_freq, Gen_Voltage_level, Time_profile);
         LCR_Result.freq = Gen_freq;
         Result_arr_LCR = [Result_arr_LCR LCR_Result];
-        % FIXME: (0) add plot
+        plot_fra_data(Fig_FRA, Result_arr_Aster);
     end
 end
 
@@ -120,14 +116,14 @@ if ~flag
         Gen_Voltage_level, Ax_arr, Dev_handles);
     disp(['PRE MEASURMENTS FINISH' newline]) % FIXME: disp
 else
-    Results_arr_PRE = Result_arr_LCR;
+    Results_arr_PRE = Aster_FRA.LCR_result_type.empty;
 end
 
 Time_prediction_m = Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
 disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']); % FIXME: disp
 
 Timer_Aster_Part = tic;
-Result_arr_Aster = Aster_FRA.LCR_result_type.empty;
+Result_arr_Aster = Result_arr_LCR;
 Extra_data_arr = Aster_FRA.LCR_extra_data_type.empty;
 N = numel(Freq_arr_Aster);
 for i = 1:N
@@ -186,7 +182,7 @@ if ~isempty(Fig) && isvalid(Fig)
 end
 % --------------------------------------------------------------
 
-Result = [Result_arr_LCR Result_arr_Aster];
+Result = Result_arr_Aster;
 Extra_data = Extra_data_arr;
 
 end

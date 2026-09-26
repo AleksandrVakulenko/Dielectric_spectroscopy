@@ -17,7 +17,9 @@ end
 
 
 
-Line_spec = '.r';
+Line_spec_Aster = '.r';
+Line_spec_LCR = '.b';
+Line_spec_Other = '.b';
 
 
 Freq_arr = [Result.freq];
@@ -25,6 +27,11 @@ Res_arr = [Result.res_abs];
 Res_err_arr = [Result.res_abs_err];
 Phi_arr = [Result.phi];
 Phi_err_arr = [Result.phi_err];
+Source_arr = [Result.source];
+
+Aster_range = Source_arr == "Aster_FRA";
+LCR_range = Source_arr == "LCR";
+Other_range = ~(Aster_range | LCR_range);
 
 % NOTE: calc cap
 Cap_arr = 1./(2*pi*Res_arr.*Freq_arr);
@@ -34,10 +41,17 @@ Cap_arr_err = -1./(2*pi*Res_arr.^2.*Freq_arr).*Res_err_arr;
 cla(Ax1);
 cla(Ax2);
 
-errorbar(Freq_arr, Cap_arr*1e12, Cap_arr_err*1e12, ...
-    Line_spec, 'Parent', Ax1);
-% errorbar(Freq_arr_plot_Aster, Res_Aster, Res_err_Aster, ...
-%     Line_spec, 'Parent', Ax1) % FIXME: COMMENT
+% PLOT 1
+
+Y_plot_v = Cap_arr*1e12; % Res_Aster
+Y_plot_err = Cap_arr_err*1e12; % Res_err_Aster
+
+errorbar(Freq_arr(Aster_range), Y_plot_v(Aster_range), ...
+    Y_plot_err(Aster_range), Line_spec_Aster, 'Parent', Ax1);
+errorbar(Freq_arr(LCR_range), Y_plot_v(LCR_range), ...
+    Y_plot_err(LCR_range), Line_spec_LCR, 'Parent', Ax1);
+errorbar(Freq_arr(Other_range), Y_plot_v(Other_range), ...
+    Y_plot_err(Other_range), Line_spec_Other, 'Parent', Ax1);
 
 ylabel('|Cap|, pF', 'Parent', Ax1)
 % ylabel('|R|, Ohm', 'Parent', Ax1) % FIXME: COMMENT
@@ -46,11 +60,17 @@ set(Ax1, 'xscale', 'log')
 % set(Ax1, 'yscale', 'log') % FIXME: COMMENT
 
 
+% PLOT 2
 
-errorbar(Freq_arr, Phi_arr, Phi_err_arr, ...
-    Line_spec, 'Parent', Ax2)
-% plot(Freq_arr_plot_Aster, abs(tan((Phi_Aster+90)/180*pi)), ...
-%     Line_spec, 'Parent', Ax2) % FIXME: COMMENT
+Y_plot_v = Phi_arr; % abs(tan((Phi_Aster+90)/180*pi))
+Y_plot_err = Phi_err_arr; % ---
+
+errorbar(Freq_arr(Aster_range), Y_plot_v(Aster_range), ...
+    Y_plot_err(Aster_range), Line_spec_Aster, 'Parent', Ax2);
+errorbar(Freq_arr(LCR_range), Y_plot_v(LCR_range), ...
+    Y_plot_err(LCR_range), Line_spec_LCR, 'Parent', Ax2);
+errorbar(Freq_arr(Other_range), Y_plot_v(Other_range), ...
+    Y_plot_err(Other_range), Line_spec_Other, 'Parent', Ax2);
 
 ylabel('Phi, deg', 'Parent', Ax2);
 % ylabel('tan(Phi)', 'Parent', Ax2) % FIXME: COMMENT
