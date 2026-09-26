@@ -142,7 +142,7 @@ for i = 1:N
     if ~isempty(Fit_Result) && Aster_FRA.FRA_results_check_valid(Fit_Result)
         Fit_Result.freq = Gen_freq;
         Result_arr_Aster = [Result_arr_Aster Fit_Result];
-        if add_extra(Fit_Result) || Always_save_extra_data
+        if add_extra(Fit_Result, Extra_data) || Always_save_extra_data
             Extra_data_arr = [Extra_data_arr Extra_data];
         else
             Extra_data = Aster_FRA.LCR_extra_data_type; % NOTE: default is NaN
@@ -188,17 +188,25 @@ Extra_data = Extra_data_arr;
 end
 
 
-
-
-% FIXME: (1) undone
-function flag = add_extra(Fit_Result)
+% NOTE: add more conditions
+function flag = add_extra(Result, Extra)
+arguments
+    Result Aster_FRA.LCR_result_type
+    Extra Aster_FRA.LCR_extra_data_type;
+end
 
 cond1 = Fit_Result.quality < 50;
 
-flag = cond1; 
+Info = whos("Extra_data_1");
+Size_kb = Info.bytes/1024;
+
+cond2 = Size_kb < 200; % [kb] FIXME: (2) magic constant
+
+flag = cond1 || cond2; 
 
 
 end
+
 
 
 

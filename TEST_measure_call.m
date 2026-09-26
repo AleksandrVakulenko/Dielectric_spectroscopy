@@ -10,8 +10,7 @@ if ispc
     LCR_dev_class_name = "LCR_8230_dev";
     LCR_dev_GPIB_num = 7;
 elseif isunix
-    % NOTE: case for home test
-    % FIXME: (1) delete this code in release version
+    % NOTE: case for home linux test
     Aster_addr = "/dev/ttyACM0";
     LCR_dev_class_name = "";
     LCR_dev_GPIB_num = [];
@@ -58,13 +57,13 @@ Always_save_extra_data = true;
 %% LCR only
 
 
-Fig_FRA = init_FRA_figure();
+Fig_FRA = gui.init_FRA_figure();
 Result = Measure_LCR(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_FRA);
 
 %%
 
 full_timer = tic;
-Fig_FRA = init_FRA_figure();
+Fig_FRA = gui.init_FRA_figure();
 
 [Result1, Extra_data_1] = Measure.single_sweep(LCR_dev_class_name, ...
     Aster_addr, Settings, Fig_FRA, Always_save_extra_data);

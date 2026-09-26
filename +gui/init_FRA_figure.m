@@ -11,7 +11,7 @@ Fig_FRA = figure('Position', Figure_pos, ...
              'MenuBar', 'figure', 'Resize', 'on');
 
 Ax1 = axes('Parent', Fig_FRA, 'Position', [0.105 0.57 0.83 0.38]);
-hold(Ax1, "on"); % FIXME: (1) myabe not
+hold(Ax1, "on");
 xlabel('f, Hz', 'Parent', Ax1);
 grid(Ax1, 'on')
 grid(Ax1, 'minor')
@@ -20,7 +20,7 @@ hold(Ax1, 'on')
 cla(Ax1)
 
 Ax2 = axes('Parent', Fig_FRA, 'Position', [0.105 0.09 0.83 0.38]);
-hold(Ax1, "on"); % FIXME: (1) myabe not
+hold(Ax1, "on");
 xlabel('f, Hz', 'Parent', Ax2);
 grid(Ax2, 'on')
 grid(Ax2, 'minor')
