@@ -1,6 +1,6 @@
 
 
-function Result = Measure_LCR(LCR_dev_class_name, Settings, ...
+function Result = LCR_alone(LCR_dev_class_name, Settings, ...
     LCR_dev_GPIB_num, Fig_FRA)
 arguments
     LCR_dev_class_name string
@@ -49,7 +49,7 @@ if ~LCR_avilable
 end
 
 
-% FIXME: (0) init LCR here and do loop whitout reconnect
+% FIXME: (2) init LCR here and do loop whitout reconnect
 
 Result = Aster_FRA.LCR_result_type.empty;
 N = numel(Freq_arr_LCR);

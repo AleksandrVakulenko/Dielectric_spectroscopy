@@ -92,7 +92,7 @@ Stop_button = Fig.UserData.stop_button;
 Resources.stop_button = Stop_button;
 Resources.underrange_ind = Fig.UserData.underrange_ind;
 Resources.range_ind = Fig.UserData.range_ind;
-% FIXME: (1) place Ax_arr to Resourses
+% FIXME: (2) place Ax_arr to Resourses
 
 % NOTE: init Aster and Gen(also Aster)
 [Aster, Gen] = Aster_FRA.connect_to_devices(Aster_addr);
@@ -101,7 +101,7 @@ Dev_handles.gen = Gen;
 Aster.set_connection_mode("I2V");
 Aster.ADC_1_direction("internal"); % "internal", "external"
 Aster.ADC_2_direction("internal"); % "internal", "external"
-Aster.initiate(); % FIXME: (1) updates current direction to internal I2V
+Aster.initiate(); % FIXME: (2) updates current direction to internal I2V
 % ------------------------------------
 
 ERR = [];

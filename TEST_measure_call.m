@@ -58,7 +58,7 @@ Always_save_extra_data = true;
 
 
 Fig_FRA = gui.init_FRA_figure();
-Result = Measure_LCR(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_FRA);
+Result = Measure.LCR_alone(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_FRA);
 
 %%
 
