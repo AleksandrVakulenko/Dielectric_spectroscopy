@@ -68,7 +68,7 @@ Fig_FRA = gui.init_FRA_figure();
 [Result1, Extra_data_1] = Measure.single_sweep(LCR_dev_class_name, ...
     Aster_addr, Settings, Fig_FRA, Always_save_extra_data);
 
-save_result_file(Result1, Extra_data_1);
+data_operation.save_result_file(Result1, Extra_data_1);
 
 Full_time = toc(full_timer);
 disp([newline num2str(Full_time/60, '%.1f') ' min']);

@@ -33,7 +33,7 @@ Settings.noise_env_flag = false; % NOTE: do not use
 Fig_FRA = gui.init_FRA_figure();
 Result = Measure.LCR_alone(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_FRA);
 
-save_result_file(Result);
+data_operation.save_result_file(Result);
 
 
 

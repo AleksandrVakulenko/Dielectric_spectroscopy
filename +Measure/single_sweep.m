@@ -12,7 +12,7 @@ function [Result, Extra_data] = single_sweep(LCR_dev_class_name, ...
 arguments
     LCR_dev_class_name
     Aster_addr
-    Settings
+    Settings % FIXME: (2) type
     Fig_FRA = []
     Always_save_extra_data = false
 end
@@ -73,7 +73,7 @@ if LCR_avilable
         LCR_Result = Aster_FRA.LCR_measure(LCR_type, Gen_freq, Gen_Voltage_level, Time_profile);
         LCR_Result.freq = Gen_freq;
         Result_arr_LCR = [Result_arr_LCR LCR_Result];
-        plot_fra_data(Fig_FRA, Result_arr_Aster);
+        gui.plot_fra_data(Fig_FRA, Result_arr_Aster);
     end
 end
 
@@ -148,7 +148,7 @@ for i = 1:N
             Extra_data = Aster_FRA.LCR_extra_data_type; % NOTE: default is NaN
             Extra_data_arr = [Extra_data_arr Extra_data];
         end
-        plot_fra_data(Fig_FRA, Result_arr_Aster);
+        gui.plot_fra_data(Fig_FRA, Result_arr_Aster);
     end
 
     % FIXME: it is bad in shuffled freq array

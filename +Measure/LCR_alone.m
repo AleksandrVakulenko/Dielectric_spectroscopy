@@ -4,7 +4,7 @@ function Result = LCR_alone(LCR_dev_class_name, Settings, ...
     LCR_dev_GPIB_num, Fig_FRA)
 arguments
     LCR_dev_class_name string
-    Settings % FIXME: (0) type
+    Settings % FIXME: (2) type
     LCR_dev_GPIB_num
     Fig_FRA = []
 end
@@ -27,8 +27,8 @@ Time_profile = Settings.time_profile;
 Noisy_env = Settings.noise_env_flag; % FIXME: unused
 
 
-
-LCR_lowest_freq = 20; % FIXME: (0) get from instrument
+% NOTE: hard code constant for LCR_8230
+LCR_lowest_freq = 10; % FIXME: (0) get from instrument
 
 F_range_LCR = Freq_arr >= LCR_lowest_freq; 
 
@@ -61,7 +61,7 @@ for i = 1:N
         Gen_Voltage_level, Time_profile);
     LCR_Result.freq = Gen_freq;
     Result = [Result LCR_Result];
-    plot_fra_data(Fig_FRA, Result);
+    gui.plot_fra_data(Fig_FRA, Result);
 end
 
 
