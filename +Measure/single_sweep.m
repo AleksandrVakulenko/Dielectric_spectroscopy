@@ -195,9 +195,9 @@ arguments
     Extra Aster_FRA.LCR_extra_data_type;
 end
 
-cond1 = Fit_Result.quality < 50;
+cond1 = Result.quality < 50;
 
-Info = whos("Extra_data_1");
+Info = whos("Extra");
 Size_kb = Info.bytes/1024;
 
 cond2 = Size_kb < 200; % [kb] FIXME: (2) magic constant

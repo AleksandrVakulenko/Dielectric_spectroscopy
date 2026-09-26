@@ -20,18 +20,18 @@ end
 
 
 Harm_num = [1]; % NOTE: set max harm number you want to find
-Time_profile = "common"; % "ultra_fast", "common", "fine", "most_accurate"
+Time_profile = "fine"; % "ultra_fast", "common", "fine", "most_accurate"
 Noisy_env = false; % NOTE: set if noise level is high
 
 Gen_Voltage_level = 1; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-% F_min = 0.002;
-% F_max = 200;
-% F_num = 150;
+F_min = 0.02;
+F_max = 200;
+F_num = 150;
 
-F_min = 0.2;
-F_max = 0.2;
-F_num = 1;
+% F_min = 0.2;
+% F_max = 0.2;
+% F_num = 1;
 
 % F_min = 0.005;
 % F_max = 200;
