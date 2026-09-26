@@ -63,19 +63,13 @@ Result = Measure_LCR(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_FRA);
 
 %%
 
-% FIXME: (0) add Extra data to save function
-
 full_timer = tic;
 Fig_FRA = init_FRA_figure();
 
 [Result1, Extra_data_1] = Measure.single_sweep(LCR_dev_class_name, ...
     Aster_addr, Settings, Fig_FRA, Always_save_extra_data);
-% [Result2, Extra_data_2] = Measure_Aster(LCR_dev_class_name, Aster_addr, ...
-%     Settings, Fig_FRA);
 
-save_result_file(Result1);
-save("Extra_data.mat", "Extra_data_1"); % FIXME
-% save_result_file(Result2);
+save_result_file(Result1, Extra_data_1);
 
 Full_time = toc(full_timer);
 disp([newline num2str(Full_time/60, '%.1f') ' min']);

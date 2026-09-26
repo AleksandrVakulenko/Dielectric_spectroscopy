@@ -1,7 +1,11 @@
 
 % FIMXE: (0) check if file exist
 
-function save_result_file(Result)
+function save_result_file(Result, Extra)
+arguments
+    Result Aster_FRA.LCR_result_type
+    Extra Aster_FRA.LCR_extra_data_type = Aster_FRA.LCR_extra_data_type.empty;
+end
 
 if isempty(Result)
     warning('Empty data, nothing to save')
@@ -33,7 +37,13 @@ if exist
 end
 
 File_path = [Save_folder_name filesep File_name];
-save(File_path, "Result");
+if isempty(Extra)
+    save(File_path, "Result");
+else
+    save(File_path, "Result", "Extra");
+end
 disp('Save OK'); % FIXME: disp
 
 end
+
+
