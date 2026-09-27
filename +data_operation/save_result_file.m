@@ -1,10 +1,11 @@
 
 % FIMXE: (0) check if file exist
 
-function save_result_file(Result, Extra)
+function save_result_file(Result, Extra, File_name)
 arguments
     Result Aster_FRA.LCR_result_type
     Extra Aster_FRA.LCR_extra_data_type = Aster_FRA.LCR_extra_data_type.empty;
+    File_name string = []
 end
 
 if isempty(Result)
@@ -22,7 +23,12 @@ if ~exist
     mkdir(Save_folder_name);
 end
 
-File_name = genereate_filename();
+if isempty(File_name)
+    File_name = genereate_filename();
+else
+    File_name = [char(File_name) '.mat'];
+end
+
 exist = f_core.find_file_in_dir(Save_folder_name, File_name, "file");
 if exist
     stop = false;

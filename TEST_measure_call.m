@@ -25,7 +25,7 @@ Noisy_env = false; % NOTE: set if noise level is high
 
 Gen_Voltage_level = 1; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-F_min = 0.005;
+F_min = 0.05;
 F_max = 200;
 F_num = 160;
 
@@ -63,13 +63,15 @@ Result = Measure.LCR_alone(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_F
 
 %%
 
+Save_file_name = "RC_01";
+
 full_timer = tic;
 Fig_FRA = gui.init_FRA_figure();
 
 [Result1, Extra_data_1] = Measure.single_sweep(LCR_dev_class_name, ...
     Aster_addr, Settings, Fig_FRA, Always_save_extra_data);
 
-data_operation.save_result_file(Result1, Extra_data_1);
+data_operation.save_result_file(Result1, Extra_data_1, Save_file_name);
 
 Full_time = toc(full_timer);
 disp([newline num2str(Full_time/60, '%.1f') ' min']);
