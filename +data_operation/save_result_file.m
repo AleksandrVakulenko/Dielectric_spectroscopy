@@ -38,9 +38,9 @@ end
 
 File_path = [Save_folder_name filesep File_name];
 if isempty(Extra)
-    save(File_path, "Result");
+    save(File_path, "Result"); % NOTE: use this name to read file
 else
-    save(File_path, "Result", "Extra");
+    save(File_path, "Result", "Extra"); % NOTE: use this name to read file
 end
 disp('Save OK'); % FIXME: disp
 

@@ -20,14 +20,14 @@ end
 
 
 Harm_num = [1]; % NOTE: set max harm number you want to find
-Time_profile = "fine"; % "ultra_fast", "common", "fine", "most_accurate"
+Time_profile = "common"; % "ultra_fast", "common", "fine", "most_accurate"
 Noisy_env = false; % NOTE: set if noise level is high
 
 Gen_Voltage_level = 1; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-F_min = 0.02;
+F_min = 0.005;
 F_max = 200;
-F_num = 150;
+F_num = 160;
 
 % F_min = 0.2;
 % F_max = 0.2;
@@ -40,7 +40,8 @@ F_num = 150;
 Freq_arr = freq_gen.td_fra(F_min, F_max, F_num);
 numel(Freq_arr)
 
-Time_prediction_m = Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
+Scale = 1.13;
+Time_prediction_m = Scale * Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
 disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']);
 
 
@@ -72,7 +73,7 @@ data_operation.save_result_file(Result1, Extra_data_1);
 
 Full_time = toc(full_timer);
 disp([newline num2str(Full_time/60, '%.1f') ' min']);
-disp('Time prediction: 202.9 min')
+disp(['Time prediction: ' num2str(Time_prediction_m, '%.1f') ' min'])
 
 %%
 

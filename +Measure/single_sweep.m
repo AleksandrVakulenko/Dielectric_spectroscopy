@@ -119,8 +119,8 @@ else
     Results_arr_PRE = Aster_FRA.LCR_result_type.empty;
 end
 
-Time_prediction_m = Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
-disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']); % FIXME: disp
+% Time_prediction_m = Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
+% disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']); % FIXME: disp
 
 Timer_Aster_Part = tic;
 Result_arr_Aster = Result_arr_LCR;
@@ -164,18 +164,18 @@ if isempty(ERR)
 end
 
 % FIXME: debug section
-Full_time = toc(Timer_Aster_Part);
-Time_to_compare = 2./Freq_arr_Aster;
-Time_to_compare(Time_to_compare < 1) = 1;
-Time_to_compare = sum(Time_to_compare);
-disp(['Full time: ' num2str(Full_time/60, '%0.1f') ' min | NC_time ~ ' ...
-    num2str(Time_to_compare/60, '%0.1f') ' min | ratio = ' ...
-    num2str(Full_time/Time_to_compare, '%0.1f') ])
-disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']);
+% Full_time = toc(Timer_Aster_Part);
+% Time_to_compare = 2./Freq_arr_Aster;
+% Time_to_compare(Time_to_compare < 1) = 1;
+% Time_to_compare = sum(Time_to_compare);
+% disp(['Full time: ' num2str(Full_time/60, '%0.1f') ' min | NC_time ~ ' ...
+%     num2str(Time_to_compare/60, '%0.1f') ' min | ratio = ' ...
+%     num2str(Full_time/Time_to_compare, '%0.1f') ])
+% disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']);
 
 
 
-disp('Finish')
+% disp('Finish')
 
 if ~isempty(Fig) && isvalid(Fig)
     close(Fig);
