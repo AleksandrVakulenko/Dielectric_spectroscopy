@@ -3,40 +3,29 @@ function [Result, Extra] = open_result_file(Filename, Folder)
 
 File_addr = [char(Folder) filesep char(Filename)];
 
-Names = get_matfile_vars(File_addr);
-
 
 if nargout == 0
     return;
 
 elseif nargout == 1
-    if any(contains(Names, "Result"))
-        Result = load(File_addr, 'Result');
-        Extra = [];
-    else
-        error("Error opening mat file: no variable with name 'Result'");
-    end
+    Result = load(File_addr, 'Result');
+    Extra = [];
 
 else
-    if any(contains(Names, "Result")) && any(contains(Names, "Extra"))
-        Result = load(File_addr, 'Result');
+    Result = load(File_addr, 'Result');
+    try
         Extra = load(File_addr, 'Extra');
-    elseif any(contains(Names, "Result")) && ~any(contains(Names, "Extra"))
-        Result = load(File_addr, 'Result');
+    catch
         Extra = [];
-    else
-        error("Error opening mat file: no variable with name 'Result'");
     end
 
-end
-
-
-
 
 end
 
+end
 
 
+% NOTE: unused function
 function Names = get_matfile_vars(File_addr)
 Info = matfile(File_addr);
 Prop_names = properties(Info);
