@@ -8,13 +8,16 @@ if nargout == 0
     return;
 
 elseif nargout == 1
-    Result = load(File_addr, 'Result');
+    Bundle = load(File_addr, 'Result');
+    Result = Bundle.Result;
     Extra = [];
 
 else
-    Result = load(File_addr, 'Result');
+    Bundle = load(File_addr, 'Result');
+    Result = Bundle.Result;
     try
-        Extra = load(File_addr, 'Extra');
+        Bundle = load(File_addr, 'Extra');
+        Extra = Bundle.Extra;
     catch
         Extra = [];
     end

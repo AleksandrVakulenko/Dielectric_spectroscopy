@@ -5,8 +5,8 @@ clc
 Folder = "Result_LCR_01";
 
 % Filename = "2026_09_25_06_20_36.mat"; % 0.025
-% Filename = "2026_09_27_01_11_24.mat"; % 71
-Filename = "2026_09_27_15_44_41.mat"; % 103
+Filename = "2026_09_27_01_11_24.mat"; % 71
+% Filename = "2026_09_27_15_44_41.mat"; % 103
 % Filename = "2026_09_27_10_05_14.mat"; % 257
 
 
@@ -33,4 +33,27 @@ xm = 0:1:300;
 ym = feval(fitres, xm);
 hold on
 plot(xm, ym)
+
+
+%%
+
+
+Fig_FRA = gui.init_FRA_figure();
+
+gui.plot_fra_data(Fig_FRA, Result);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
