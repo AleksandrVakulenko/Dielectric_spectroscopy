@@ -1,56 +1,62 @@
-function [C, R, C_err, R_err] = RC_calc(Z_mod, Z_mod_err, theta, ...
-    theta_err, Freq, option)
+
+% NOTE: calc R[Ohm] and C[F] of series or parallel circuit 
+% by |Z|[Ohm] and Phi[deg]
+
+% NOTE: also calc its errors
+
+function [C, R, C_err, R_err] = RC_calc(Z_abs, Z_abs_err, Phi, ...
+    Phi_err, Freq, Circuit)
 
     arguments
-        Z_mod double
-        Z_mod_err double
-        theta double
-        theta_err double
+        Z_abs double
+        Z_abs_err double
+        Phi double
+        Phi_err double
         Freq double
-        option {mustBeMember(option, ["series", "parallel"])}
+        Circuit {mustBeMember(Circuit, ["series", "parallel"])}
     end
     
-    if option == "series"
-        [C, R, C_err, R_err] = RC_calc_series(Z_mod, Z_mod_err, theta, ...
-            theta_err, Freq);
+    if Circuit == "series"
+        [C, R, C_err, R_err] = RC_calc_series(Z_abs, Z_abs_err, Phi, ...
+            Phi_err, Freq);
     else
-        [C, R, C_err, R_err] = RC_calc_parallel(Z_mod, Z_mod_err, theta, ...
-            theta_err, Freq);
+        [C, R, C_err, R_err] = RC_calc_parallel(Z_abs, Z_abs_err, Phi, ...
+            Phi_err, Freq);
     end
 end
 
 
-function [C_par, R_par, C_par_err, R_par_err] = RC_calc_parallel(Z_mod, ...
-    Z_mod_err, theta, theta_err, Freq)
+function [C_par, R_par, C_par_err, R_par_err] = RC_calc_parallel(Z_abs, ...
+    Z_abs_err, Phi, Phi_err, Freq)
 
     Omega = 2*pi*Freq;
     
-    theta_err_rad = theta_err * pi/180;
+    Phi_err_rad = Phi_err * pi/180;
     
-    R_par = Z_mod/cosd(theta);
-    C_par = -sind(theta)/(Omega*Z_mod);
+    R_par = Z_abs/cosd(Phi);
+    C_par = -sind(Phi)/(Omega*Z_abs);
 
-    R_par_err = sqrt((Z_mod_err/cosd(theta))^2 + ...
-        ((theta_err_rad * Z_mod*sind(theta))/(cosd(theta))^2)^2);
+    R_par_err = sqrt((Z_abs_err/cosd(Phi))^2 + ...
+        ((Phi_err_rad * Z_abs*sind(Phi))/(cosd(Phi))^2)^2);
 
-    C_par_err = abs(1/(Omega*Z_mod)) * sqrt(((sind(theta)*Z_mod_err)/Z_mod)^2 + ...
-        (cosd(theta) * theta_err_rad)^2);
+    C_par_err = abs(1/(Omega*Z_abs)) * sqrt(((sind(Phi)*Z_abs_err)/Z_abs)^2 + ...
+        (cosd(Phi) * Phi_err_rad)^2);
 end
 
 
-function [C_ser, R_ser, C_ser_err, R_ser_err] = RC_calc_series(Z_mod, ...
-    Z_mod_err, theta, theta_err, Freq)
+function [C_ser, R_ser, C_ser_err, R_ser_err] = RC_calc_series(Z_abs, ...
+    Z_abs_err, Phi, Phi_err, Freq)
 
     Omega = 2*pi*Freq;
-    theta_err_rad = theta_err * pi/180;
+    Phi_err_rad = Phi_err * pi/180;
     
-    R_ser = Z_mod * cosd(theta);
-    C_ser = -1/(Omega*Z_mod*sind(theta));
+    R_ser = Z_abs * cosd(Phi);
+    C_ser = -1/(Omega*Z_abs*sind(Phi));
 
-    R_ser_err = sqrt((cosd(theta) * Z_mod_err)^2 + ...
-        (Z_mod * sind(theta) * theta_err_rad)^2);
+    R_ser_err = sqrt((cosd(Phi) * Z_abs_err)^2 + ...
+        (Z_abs * sind(Phi) * Phi_err_rad)^2);
 
 
-    C_ser_err = abs(1/(Omega*Z_mod*(sind(theta)))) * sqrt((Z_mod_err/Z_mod)^2 + ...
-        ((cosd(theta)*theta_err_rad)/sind(theta))^2);
+    C_ser_err = abs(1/(Omega*Z_abs*(sind(Phi)))) * sqrt((Z_abs_err/Z_abs)^2 + ...
+        ((cosd(Phi)*Phi_err_rad)/sind(Phi))^2);
 end
