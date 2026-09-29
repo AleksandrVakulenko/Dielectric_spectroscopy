@@ -34,7 +34,7 @@ if exist
     stop = false;
     while ~stop
         pause(0.2);
-        File_name = genereate_filename();
+        File_name = genereate_filename(); % FIXME: lost original name
         exist = f_core.find_file_in_dir(Save_folder_name, File_name, "file");
         if ~exist
             stop = true;

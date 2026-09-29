@@ -4,9 +4,15 @@
 Folder = 'TEST_data';
 
 % NOTE: uncomment any filename
-Filename = 'test_data_RC.mat';
-% Filename = 'test_data_CAP_10p.mat';
 % Filename = 'test_data_CAP_100n.mat';
+% Filename = 'test_data_CAP_10n.mat';
+Filename = 'test_data_CAP_1n.mat';
+% Filename = 'test_data_CAP_10p.mat';
+% Filename = 'test_data_RES_100M.mat';
+% Filename = 'test_data_RC.mat';
+
+% Folder = 'Result_LCR_01';
+% Filename = '2026_09_29_00_26_49.mat';
 
 % NOTE: change limit value and look on result
 Limit = 10; % [%]
@@ -43,8 +49,8 @@ end
 Cap_err_rel = abs(Cap_par_err_arr./Cap_par_arr)*100; % [%]
 Res_err_rel = abs(Res_par_err_arr./Res_par_arr)*100; % [%]
 
-Cap_par_err_arr(Cap_err_rel > Limit) = NaN;
-Res_par_err_arr(Res_err_rel > Limit) = NaN;
+% Cap_par_err_arr(Cap_err_rel > Limit) = NaN;
+% Res_par_err_arr(Res_err_rel > Limit) = NaN;
 
 
 

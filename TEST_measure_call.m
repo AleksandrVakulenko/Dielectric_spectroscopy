@@ -23,11 +23,11 @@ Harm_num = [1]; % NOTE: set max harm number you want to find
 Time_profile = "common"; % "ultra_fast", "common", "fine", "most_accurate"
 Noisy_env = false; % NOTE: set if noise level is high
 
-Gen_Voltage_level = 1; % [V]
+Gen_Voltage_level = 0.7; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-F_min = 0.05;
+F_min = 0.001;
 F_max = 200;
-F_num = 160;
+F_num = 120;
 
 % F_min = 0.2;
 % F_max = 0.2;
@@ -40,8 +40,7 @@ F_num = 160;
 Freq_arr = freq_gen.td_fra(F_min, F_max, F_num);
 numel(Freq_arr)
 
-Scale = 1.13;
-Time_prediction_m = Scale * Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
+Time_prediction_m = Aster_FRA_helper.time_prediction(Freq_arr, Time_profile);
 disp(['Time prediction: ' num2str(Time_prediction_m, '%0.1f') ' min']);
 
 
@@ -63,7 +62,7 @@ Result = Measure.LCR_alone(LCR_dev_class_name, Settings, LCR_dev_GPIB_num, Fig_F
 
 %%
 
-Save_file_name = "RC_01";
+Save_file_name = [];
 
 full_timer = tic;
 Fig_FRA = gui.init_FRA_figure();
@@ -76,12 +75,6 @@ data_operation.save_result_file(Result1, Extra_data_1, Save_file_name);
 Full_time = toc(full_timer);
 disp([newline num2str(Full_time/60, '%.1f') ' min']);
 disp(['Time prediction: ' num2str(Time_prediction_m, '%.1f') ' min'])
-
-%%
-
-s = whos("Extra_data_1");
-Size = s.bytes/1024/1024;
-disp(['Size = ' num2str(Size, '%0.2f'), ' Mb'])
 
 
 
