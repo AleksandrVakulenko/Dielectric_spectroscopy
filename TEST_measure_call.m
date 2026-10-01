@@ -6,7 +6,7 @@ clc
 
 if ispc
     % NOTE: case for full test
-    Aster_addr = 6;
+    Aster_addr = 5;
     LCR_dev_class_name = "LCR_8230_dev";
     LCR_dev_GPIB_num = 7;
 elseif isunix
@@ -19,15 +19,15 @@ end
 
 
 
-Harm_num = [1]; % NOTE: set max harm number you want to find
+Harm_num = [3]; % NOTE: set max harm number you want to find
 Time_profile = "common"; % "ultra_fast", "common", "fine", "most_accurate"
 Noisy_env = false; % NOTE: set if noise level is high
 
-Gen_Voltage_level = 0.7; % [V]
+Gen_Voltage_level = 1.0; % [V]
 DC_bias = 0.0; % [V] % NOTE: do not use
-F_min = 0.001;
-F_max = 200;
-F_num = 120;
+F_min = 0.05;
+F_max = 30e6;
+F_num = 200;
 
 % F_min = 0.2;
 % F_max = 0.2;
@@ -68,13 +68,14 @@ full_timer = tic;
 Fig_FRA = gui.init_FRA_figure();
 
 [Result1, Extra_data_1] = Measure.single_sweep(LCR_dev_class_name, ...
-    Aster_addr, Settings, Fig_FRA, Always_save_extra_data);
+    Aster_addr, Settings, LCR_dev_GPIB_num, Fig_FRA, Always_save_extra_data);
 
 data_operation.save_result_file(Result1, Extra_data_1, Save_file_name);
 
 Full_time = toc(full_timer);
 disp([newline num2str(Full_time/60, '%.1f') ' min']);
 disp(['Time prediction: ' num2str(Time_prediction_m, '%.1f') ' min'])
+
 
 
 

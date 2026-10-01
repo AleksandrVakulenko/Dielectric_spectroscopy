@@ -8,11 +8,12 @@
 % 5) replace disp by klog
 
 function [Result, Extra_data] = single_sweep(LCR_dev_class_name, ...
-    Aster_addr, Settings, Fig_FRA, Always_save_extra_data)
+    Aster_addr, Settings, LCR_dev_GPIB_num, Fig_FRA, Always_save_extra_data)
 arguments
     LCR_dev_class_name
     Aster_addr
     Settings % FIXME: (2) type
+    LCR_dev_GPIB_num
     Fig_FRA = []
     Always_save_extra_data = false
 end
@@ -20,7 +21,8 @@ end
 if isempty(LCR_dev_class_name) || LCR_dev_class_name == ""
     LCR_type = Aster_FRA_helper.LCR_device_name_type.empty;
 elseif LCR_dev_class_name == "LCR_8230_dev"
-    LCR_type = Aster_FRA_helper.LCR_device_name_type(LCR_dev_class_name, []);
+    LCR_type = Aster_FRA_helper.LCR_device_name_type(LCR_dev_class_name, ...
+        LCR_dev_GPIB_num);
 else
     error('LCR_dev_class_name: wrong value.');
 end
@@ -41,7 +43,7 @@ Noisy_env = Settings.noise_env_flag;
 % FIXME: make it static and abstract:
 % Limits = LCR_dev.get_max_amp_and_freq();
 Aster_highest_freq = 200; % FIXME: get from instrument
-LCR_lowest_freq = 20; % FIXME: get from instrument
+LCR_lowest_freq = 100; % FIXME: get from instrument
 
 F_range_Aster = Freq_arr <= Aster_highest_freq; 
 F_range_LCR = Freq_arr >= LCR_lowest_freq; 
@@ -70,10 +72,11 @@ if LCR_avilable
         disp([newline 'LCR freq list: ' num2str(i) '/' num2str(N)]);
 
         Gen_freq = Freq_arr_LCR(i);
-        LCR_Result = Aster_FRA.LCR_measure(LCR_type, Gen_freq, Gen_Voltage_level, Time_profile);
+        LCR_Result = Aster_FRA.LCR_measure(LCR_type, Gen_freq, ...
+            Gen_Voltage_level, Time_profile);
         LCR_Result.freq = Gen_freq;
         Result_arr_LCR = [Result_arr_LCR LCR_Result];
-        gui.plot_fra_data(Fig_FRA, Result_arr_Aster);
+        gui.plot_fra_data(Fig_FRA, Result_arr_LCR);
     end
 end
 

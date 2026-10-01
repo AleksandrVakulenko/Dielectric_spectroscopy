@@ -5,11 +5,12 @@ Folder = 'TEST_data';
 
 % NOTE: uncomment any filename
 % Filename = 'test_data_CAP_100n.mat';
-% Filename = 'test_data_CAP_10n.mat';
-Filename = 'test_data_CAP_1n.mat';
+Filename = 'test_data_CAP_10n.mat';
+% Filename = 'test_data_CAP_1n.mat';
 % Filename = 'test_data_CAP_10p.mat';
 % Filename = 'test_data_RES_100M.mat';
 % Filename = 'test_data_RC.mat';
+% Filename = 'First_real_smaple.mat';
 
 % Folder = 'Result_LCR_01';
 % Filename = '2026_09_29_00_26_49.mat';
@@ -36,7 +37,7 @@ for i = 1:numel(Freq_arr)
 
     [Cap_par, Res_par, Cap_par_err, Res_par_err] = ...
         data_conversion.RC_calc(Res_arr(i), Res_err_arr(i), ...
-        Phi_arr(i), Phi_err_arr(i), Freq_arr(i), "parallel");
+        Phi_arr(i), Phi_err_arr(i), Freq_arr(i), "series");
 
     Cap_par_arr = [Cap_par_arr Cap_par];
     Cap_par_err_arr = [Cap_par_err_arr Cap_par_err];
@@ -49,8 +50,8 @@ end
 Cap_err_rel = abs(Cap_par_err_arr./Cap_par_arr)*100; % [%]
 Res_err_rel = abs(Res_par_err_arr./Res_par_arr)*100; % [%]
 
-% Cap_par_err_arr(Cap_err_rel > Limit) = NaN;
-% Res_par_err_arr(Res_err_rel > Limit) = NaN;
+Cap_par_err_arr(Cap_err_rel > Limit) = NaN;
+Res_par_err_arr(Res_err_rel > Limit) = NaN;
 
 
 
